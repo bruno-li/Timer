@@ -23,7 +23,7 @@ class Timer {
 	start = () => {
 		//if a callback was passed, this is where we call it with the reference we created in the constructor, and let the callback object know that the timer has started. This is how we pass a value outside the class
 		if (this.onStart) {
-			this.onStart();
+			this.onStart(this.timeRemaining);
 		}
 		// call tick as soon as the user click the button to start
 		this.tick();
@@ -51,7 +51,8 @@ class Timer {
 			this.timeRemaining = this.timeRemaining - 0.05;
 			// check for callback
 			if (this.onTick) {
-				this.onTick();
+				// when called, we pass this.timeRemaining, to keep track of timer duration
+				this.onTick(this.timeRemaining);
 			}
 		}
 	};
