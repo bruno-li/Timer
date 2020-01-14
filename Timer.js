@@ -30,7 +30,11 @@ class Timer {
 		// then run tick method every 1 second
 		// we need to refer the timer varialbe with keyword "this"
 		// to grant pause() method access to the timer variable.
-		this.interval = setInterval(this.tick, 1000);
+		this.interval = setInterval(this.tick, 50);
+	};
+	pause = () => {
+		// stops setInterval from running by refering to the interval variable in the start() method
+		clearInterval(this.interval);
 	};
 	tick = () => {
 		// (this.timeRemaining - 1) expression is calculated first by calling the get timeRemaining() method and then the set timeRemaining method is called (this.timeRemaining(time)) and uses the value returned by the (this.timeRemaining) as an argument to call the set timeRemaining(time).
@@ -43,16 +47,13 @@ class Timer {
 				this.onComplete();
 			}
 		} else {
-			this.timeRemaining = this.timeRemaining - 1;
+			// 0.05 to match the milisecond in the setInterval
+			this.timeRemaining = this.timeRemaining - 0.05;
 			// check for callback
 			if (this.onTick) {
 				this.onTick();
 			}
 		}
-	};
-	pause = () => {
-		// stops setInterval from running by refering to the interval variable in the start() method
-		clearInterval(this.interval);
 	};
 
 	//getter and setter helper functions to retrive and set values to the DOM element
@@ -61,6 +62,7 @@ class Timer {
 		return parseFloat(this.durationInput.value);
 	}
 	set timeRemaining(time) {
-		this.durationInput.value = time;
+		//use toFixed to round the number, having only 2 the decimals
+		this.durationInput.value = time.toFixed(2);
 	}
 }
